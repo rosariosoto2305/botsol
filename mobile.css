@@ -3020,117 +3020,13 @@ body {
 
 
 /* ═══════════════════════════════════════════════════════
-   PAGE LOADER — splash de entrada
+   PAGE LOADER
+   Ya no vive aca: el loader es unico y compartido para
+   escritorio y mobile, y esta definido en index.html
+   (#site-loader). mobile.js se engancha a el via
+   window.__onSiteLoaderDone() para disparar el reveal del
+   hero y el dibujado del navbar (ver mas abajo, .m-hero-enter).
 ════════════════════════════════════════════════════════ */
-
-#m-loader {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    background: var(--n);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    /* sale con fade */
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-#m-loader.m-loader-done {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-/* Logo dentro del loader */
-.m-loader-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    animation: m-loader-pop 0.6s cubic-bezier(.34,1.56,.64,1) both;
-}
-.m-loader-svg {
-    width: 44px;
-    height: auto;
-    display: block;
-}
-@keyframes m-loader-pop {
-    0%   { opacity: 0; transform: scale(.82) translateY(10px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.m-loader-brand {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--tl);
-    letter-spacing: -.01em;
-}
-.m-loader-brand span { color: var(--g); }
-
-.m-loader-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: rgba(168,216,219,.4);
-}
-
-/* Barra de progreso */
-.m-loader-bar-track {
-    width: 140px;
-    height: 2px;
-    background: rgba(90,172,176,.12);
-    border-radius: 99px;
-    overflow: hidden;
-}
-.m-loader-bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--tm), var(--g));
-    border-radius: 99px;
-    animation: m-loader-fill 1.1s cubic-bezier(.4,0,.2,1) 0.2s forwards;
-}
-@keyframes m-loader-fill {
-    0%   { width: 0%; }
-    60%  { width: 80%; }
-    100% { width: 100%; }
-}
-
-/* Puntos de carga */
-.m-loader-dots {
-    display: flex;
-    gap: 6px;
-}
-.m-loader-dot {
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--tm);
-    animation: m-loader-bounce 0.9s ease-in-out infinite;
-}
-.m-loader-dot:nth-child(2) { animation-delay: .15s; background: color-mix(in srgb, var(--tm) 60%, var(--g)); }
-.m-loader-dot:nth-child(3) { animation-delay: .30s; background: var(--g); }
-@keyframes m-loader-bounce {
-    0%, 80%, 100% { transform: translateY(0);   opacity: .4; }
-    40%           { transform: translateY(-6px); opacity: 1;  }
-}
-
-/* El contenido principal empieza invisible y sube */
-body.m-loading .m-navbar,
-body.m-loading .m-sep,
-body.m-loading > section {
-    opacity: 0;
-}
-body.m-loaded .m-navbar,
-body.m-loaded .m-sep,
-body.m-loaded > section {
-    animation: m-page-enter 0.6s cubic-bezier(.4,0,.2,1) forwards;
-}
-@keyframes m-page-enter {
-    0%   { opacity: 0; transform: translateY(16px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
 
 
 /* ═══════════════════════════════════════════════════════

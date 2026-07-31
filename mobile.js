@@ -89,8 +89,6 @@
 
   
     (function () {
-        var loader = document.getElementById('m-loader');
-
         function startNavbarDraw() {
             var delays = [0.05, 0.15, 0.28, 0.38, 0.44, 0.50, 0.56];
             document.querySelectorAll('.m-logo-svg path, .m-logo-svg circle').forEach(function(el, i) {
@@ -105,10 +103,7 @@
             });
         }
 
-        function dismissLoader() {
-            loader.classList.add('m-loader-done');
-            document.body.classList.remove('m-loading');
-            document.body.classList.add('m-loaded');
+        function revealHero() {
             requestAnimationFrame(function () {
                 document.querySelectorAll('.m-hero-enter').forEach(function (el) {
                     el.classList.add('is-hero-visible');
@@ -116,9 +111,18 @@
                 startNavbarDraw();
             });
         }
-        var minDone = false, pageDone = false;
-        setTimeout(function () { minDone = true; if (pageDone) dismissLoader(); }, 1300);
-        window.addEventListener('load', function () { pageDone = true; if (minDone) dismissLoader(); });
+
+        // El loader ahora es unico y vive en index.html (ver #site-loader).
+        // Enganchamos el reveal del hero + el dibujado del navbar a que
+        // termine ese loader compartido, en vez de depender de un
+        // #m-loader propio de esta version que ya no existe.
+        if (window.__onSiteLoaderDone) {
+            window.__onSiteLoaderDone(revealHero);
+        } else {
+            // Fallback por si este archivo se usa fuera de index.html
+            // (ej. abriendo mobile.html suelto, sin el loader compartido)
+            window.addEventListener('load', revealHero);
+        }
     })();
     
 

@@ -1586,25 +1586,38 @@ body {
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
 }
+.m-vmodal-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 94vw;
+    transform: scale(.94) translateY(10px);
+    transition: transform .28s cubic-bezier(.22,1,.36,1);
+}
+.m-vmodal.is-open .m-vmodal-inner { transform: scale(1) translateY(0); }
 .m-vmodal-box {
     position: relative;
-    width: 94vw;
+    width: 100%;
     background: #0d1f24;
     border: 1px solid rgba(61,148,153,.25);
     border-radius: 12px;
     overflow: hidden;
-    transform: scale(.94) translateY(10px);
-    transition: transform .28s cubic-bezier(.22,1,.36,1);
 }
-.m-vmodal.is-open .m-vmodal-box { transform: scale(1) translateY(0); }
 .m-vmodal-close {
-    position: absolute; top: 8px; right: 8px; z-index: 2;
-    background: rgba(255,255,255,.1);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(10,18,22,.92);
     border: 1px solid rgba(255,255,255,.15);
-    border-radius: 50%;
-    width: 34px; height: 34px;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; cursor: pointer;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .04em;
+    color: #fff;
+    cursor: pointer;
 }
 .m-vmodal-iframe-wrap {
     position: relative;
@@ -2112,12 +2125,12 @@ body {
    SECCIÓN: ANÁLISIS DE PROCESOS
 ═══════════════════════════════════════════════ */
 .m-analisis-section {
-    height: calc(100vh - var(--navbar-h));
     display: flex;
     flex-direction: column;
     background: var(--hero-bg);
     position: relative;
     overflow: hidden;
+    padding: 44px 0 52px;
 }
 .m-analisis-section::before {
     content: '';
@@ -2131,9 +2144,7 @@ body {
     z-index: 0;
 }
 
-/* 35% header */
 .m-analisis-header {
-    flex: 0 0 35%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2141,7 +2152,6 @@ body {
     position: relative;
     z-index: 1;
     gap: 10px;
-    border-bottom: 1px solid rgba(90,122,138,.15);
 }
 .m-analisis-eyebrow {
     display: flex;
@@ -2879,6 +2889,10 @@ body {
     border: 1px solid;
     text-decoration: none;
     transition: background .2s, transform .2s;
+    /* Permitir seleccionar/copiar el texto (mail, telefono) en vez de
+       que el navegador intente "arrastrar" el link entero */
+    -webkit-user-drag: none;
+    user-select: text;
 }
 .m-ct-dark-card:active { transform: translateY(-2px); }
 .m-ct-dark-card-t { background: rgba(255,255,255,.04); border-color: rgba(46,127,132,.2); }
@@ -3004,12 +3018,13 @@ body {
 .m-auto-section,
 .m-dash-section,
 .m-faq-section,
-.m-analisis-section,
 .m-sobremi-section,
 .m-contacto-section {
     min-height: calc(100dvh - var(--navbar-h));
     box-sizing: border-box;
 }
+/* .m-analisis-section queda afuera a proposito: se adapta a su
+   contenido (solo header), no fuerza pantalla completa. */
 
 /* Los wrappers internos que usan display:flex deben heredar la altura */
 .m-sm-wrap,

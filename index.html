@@ -22,6 +22,28 @@
             /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     </script>
 
+    <!-- 1.b Si despues de cargar el ancho cruza los 768px (ventana redimensionada,
+         celular rotado, etc.), el CSS/JS que ya se descargo queda desactualizado.
+         En vez de intentar "cambiar todo en caliente", recargamos una vez para
+         que vuelva a correr la deteccion desde cero con el CSS/JS correcto. -->
+    <script>
+        (function () {
+            var mql = window.matchMedia("(max-width: 768px)");
+            function onBreakpointCross() {
+                var isMobileNow = mql.matches ||
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                if (isMobileNow !== window.__isMobile) {
+                    location.reload();
+                }
+            }
+            if (mql.addEventListener) {
+                mql.addEventListener("change", onBreakpointCross);
+            } else if (mql.addListener) {
+                mql.addListener(onBreakpointCross); // Safari viejo
+            }
+        })();
+    </script>
+
     <!-- 2. Carga condicional de CSS (sin document.write, mas robusto) -->
     <script>
         (function () {
